@@ -37,9 +37,9 @@ namespace UnCrashSim
         }
         private void mainloop()
         {
+            Graphics tempG = Graphics.FromImage(mainBitmap);
             while (Application.OpenForms.OfType<Form1>().Any()) {
-                Bitmap tempBitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
-                Graphics tempG = Graphics.FromImage(tempBitmap);
+                
                 tempG.Clear(Color.Green);
                 for (int i = 0; i < X; i++)
                 {
@@ -49,7 +49,7 @@ namespace UnCrashSim
                     }
                 }
                 // r.render(tempG);
-                g.DrawImage(tempBitmap, 0, 0);
+                g.DrawImage(mainBitmap, 0, 0);
                 //r.calculate();
                 for (int i = 0; i < X; i++)
                 {
@@ -58,9 +58,10 @@ namespace UnCrashSim
                         roads[i, j].calculate(ref roads);
                     }
                 }
-                tempG.Dispose();
-                tempBitmap.Dispose();
+                
+                
             }
+            tempG.Dispose();
         }
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
