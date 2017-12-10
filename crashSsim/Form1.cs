@@ -107,13 +107,46 @@ namespace UnCrashSim
             tLLeftRigth.calculate();
             foreach (Car c in cars)
             {
-                if (c.Rotation== 90|| c.Rotation == -90)
+                if (posToList.X != maxPosToList.X&& posToList.Y != maxPosToList.Y && posToList.X !=0&& posToList.Y!=0)
                 {
-                    c.calculate(tLUpDown);
-                }
-                if (c.Rotation == 180 || c.Rotation == 0)
+                    if (c.Rotation == 90)
+                    {
+
+                        c.calculate(tLUpDown, cars.Concat(roads[posToList.X, posToList.Y + 1].cars).ToList(), new Point(pos.X + size.Width / 2, pos.Y + size.Height / 2));
+
+                    }
+                    else if (c.Rotation == -90)
+                    {
+
+                        c.calculate(tLUpDown, cars.Concat(roads[posToList.X, posToList.Y - 1].cars).ToList(), new Point(pos.X + size.Width / 2, pos.Y + size.Height / 2));
+
+                    }
+                    else if (c.Rotation == 180)
+                    {
+
+                        c.calculate(tLLeftRigth, cars.Concat(roads[posToList.X + 1, posToList.Y].cars).ToList(), new Point(pos.X + size.Width / 2, pos.Y + size.Height / 2));
+
+                    }
+                    else if (c.Rotation == 0)
+                    {
+
+                        c.calculate(tLLeftRigth, cars.Concat(roads[posToList.X - 1, posToList.Y].cars).ToList(), new Point(pos.X + size.Width / 2, pos.Y + size.Height / 2));
+
+                    }
+                }else
                 {
-                    c.calculate(tLLeftRigth);
+                    if (c.Rotation == 90|| c.Rotation == -90)
+                    {
+
+                        c.calculate(tLUpDown, cars, new Point(pos.X + size.Width / 2, pos.Y + size.Height / 2));
+
+                    }
+                    else if (c.Rotation == 180|| c.Rotation == 0)
+                    {
+
+                        c.calculate(tLLeftRigth, cars,new Point(pos.X+size.Width/2,pos.Y+size.Height / 2));
+
+                    }
                 }
                 if (c.Pos.X >= pos.X + size.Width) {
                     if (posToList.X<maxPosToList.X ) roads[posToList.X+1, posToList.Y].cars.Add(c);
@@ -243,41 +276,59 @@ namespace UnCrashSim
     }
     public class Car
     {
+        class Choice {
+            public PointF speed;
+            public double rotation;
+            public Choice(PointF speed,double rotation)
+            {
+                this.speed = speed;
+                this.rotation = rotation;
+            }
+        }
+        private Choice[] choices = { new Choice(new PointF(-1,0),0), new Choice(new PointF(1, 0), 180),new Choice(new PointF(0, -1), 90),new Choice(new PointF(0, 1), -90) };
+        static Random rnd = new Random();
         SolidBrush b = new SolidBrush(Color.LightGray);
-        private PointF pos; 
+        private PointF pos;
         public PointF Pos { get { return pos; } }
+        public PointF[] p;
         private Size size;
         private PointF speed;
         private PointF acceleration, deceleration;
-        private double rotation,rotationSpeed;
-        public double Rotation { get {return rotation; } }
-        public Car(Size size,Point pos, PointF speed, double rotation)
+        private double rotation, rotationSpeed;
+        public double Rotation { get { return rotation; } }
+        public Car(Size size, Point pos, PointF speed, double rotation)
         {
             this.size = size;
             this.pos = pos;
             this.speed = speed;
-            this.acceleration = new PointF(speed.X/80, speed.Y / 80);
+            this.acceleration = new PointF(speed.X / 80, speed.Y / 80);
             this.rotation = rotation;
-            this.deceleration = new PointF(speed.X*2, speed.Y*2);
+            this.deceleration = new PointF(speed.X / 2, speed.Y / 2);
+            PointF[] tmp = { new PointF(pos.X - 5 * size.Width / 9, pos.Y - 10 * size.Height / 35), new PointF(pos.X - 5 * size.Width / 9, pos.Y - 23 * size.Height / 35), new PointF(pos.X - 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X - 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4 * size.Width / 9, pos.Y - 10 * size.Height / 35) };
+            this.p = tmp;
         }
-        public Car(Size size,Point pos, PointF speed, PointF acceleration, int rotation,int rotationSpeed)
+        public Car(Size size, Point pos, PointF speed, PointF acceleration, int rotation, int rotationSpeed)
         {
+
             this.size = size;
             this.pos = pos;
             this.speed = speed;
             this.acceleration = acceleration;
             this.rotation = rotation;
             this.rotationSpeed = rotationSpeed;
+            PointF[] tmp = { new PointF(pos.X - 5 * size.Width / 9, pos.Y - 10 * size.Height / 35), new PointF(pos.X - 5 * size.Width / 9, pos.Y - 23 * size.Height / 35), new PointF(pos.X - 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X - 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4 * size.Width / 9, pos.Y - 10 * size.Height / 35) };
+            this.p = tmp;
         }
-        public void calculate(TrafficLight tL)
+        public void calculate(TrafficLight tL, List<Car> cars,Point roadCenter)
         {
             bool infrondOfLight = false;
             Light t;
-            if (rotation == 90) t = tL.lights.Find(x=>x.direction == 0 );
+            if (rotation == 90) t = tL.lights.Find(x => x.direction == 0);
             else if (rotation == -90) t = tL.lights.Find(x => x.direction == 180);
-            else if(rotation == 0) t = tL.lights.Find(x => x.direction == -90);
+            else if (rotation == 0) t = tL.lights.Find(x => x.direction == -90);
             else t = tL.lights.Find(x => x.direction == 90);
-            if (t!=null) {
+            if (t != null)
+            {
                 if (t.direction == 0 && t.rect.Y <= pos.Y)
                 {
                     infrondOfLight = true;
@@ -285,7 +336,8 @@ namespace UnCrashSim
                 else if (t.direction == 180 && t.rect.Y >= pos.Y)
                 {
                     infrondOfLight = true;
-                }else if (t.direction == 90 && t.rect.X >= pos.X)
+                }
+                else if (t.direction == 90 && t.rect.X >= pos.X)
                 {
                     infrondOfLight = true;
                 }
@@ -296,40 +348,73 @@ namespace UnCrashSim
             }
             else
             {
+            }/*
+            if (Math.Pow(roadCenter.X - this.pos.X, 2) + Math.Pow(roadCenter.Y - this.pos.Y, 2) < Math.Pow(size.Width, 2))
+            {
+                int i  = rnd.Next(0,3);
+                
+                rotation = choices[i].rotation;
+                speed.X = (Math.Abs(speed.X)+ Math.Abs(speed.Y)) * choices[i].speed.X;
+                speed.Y = (Math.Abs(speed.Y)+ Math.Abs(speed.X)) * choices[i].speed.Y;
+                deceleration.X = (Math.Abs(deceleration.X)+ Math.Abs(deceleration.Y)) * choices[i].speed.X;
+                deceleration.Y = (Math.Abs(deceleration.Y)+ Math.Abs(deceleration.X)) * choices[i].speed.Y;
+                acceleration.X = (Math.Abs(acceleration.X)+ Math.Abs(acceleration.Y)) * choices[i].speed.X;
+                acceleration.Y = (Math.Abs(acceleration.Y)+ Math.Abs(acceleration.X)) * choices[i].speed.Y;
+                pos.X = roadCenter.X+ size.Width * choices[i].speed.X;
+                pos.Y = roadCenter.Y+ size.Width * choices[i].speed.Y;
+            }*/
+            bool carClose = false;
+            foreach (Car c in cars)
+            {
+                if (c != this && this.rotation == c.rotation && Math.Pow(c.Pos.X - this.pos.X, 2) + Math.Pow(c.Pos.Y - this.pos.Y, 2) <= Math.Pow(this.size.Width, 2)) carClose = true;
             }
-            if (infrondOfLight) {
-                if (tL.light == 0)
+            if (carClose)//cars.Exists(x => Math.Pow(x.Pos.X - this.pos.X, 2) + Math.Pow(x.Pos.Y - this.pos.Y, 2) <= Math.Pow(this.size.Width, 2))
+            {
+                if (Math.Abs(speed.X) >= Math.Abs(deceleration.X))
+                    speed.X -= deceleration.X;
+                else speed.X = 0;
+                if (Math.Abs(speed.Y) >= Math.Abs(deceleration.Y))
+                    speed.Y -= deceleration.Y;
+                else speed.Y = 0;
+            }
+            else
+            {
+
+                if (infrondOfLight)
                 {
-                    if(Math.Abs(speed.X)<=size.Width / 8)
-                        speed.X += acceleration.X ;
-                    if (Math.Abs(speed.Y) <= size.Width / 8)
-                        speed.Y += acceleration.Y;
+                    if (tL.light == 0)
+                    {
+                        if (Math.Abs(speed.X) <= size.Width / 8)
+                            speed.X += acceleration.X;
+                        if (Math.Abs(speed.Y) <= size.Width / 8)
+                            speed.Y += acceleration.Y;
+                    }
+                    else if (tL.light < 1)
+                    {
+                        if (Math.Abs(speed.X) <= size.Width / 4 && Math.Abs(speed.Y) <= size.Width / 4)
+                        {
+                            speed.X += acceleration.X;
+                            speed.Y += acceleration.Y;
+                        }
+                    }
+                    else if (tL.light == 2)
+                    {
+                        if (Math.Abs(speed.X) >= Math.Abs(deceleration.X))
+                            speed.X -= deceleration.X;
+                        else speed.X = 0;
+                        if (Math.Abs(speed.Y) >= Math.Abs(deceleration.Y))
+                            speed.Y -= deceleration.Y;
+                        else speed.Y = 0;
+                    }
+
                 }
-                else if (tL.light < 1)
+                else
                 {
-                    if (Math.Abs(speed.X) <= size.Width / 4 && Math.Abs(speed.Y) <= size.Width / 4)
+                    if (Math.Abs(speed.X) <= size.Width / 2 && Math.Abs(speed.Y) <= size.Width / 2)
                     {
                         speed.X += acceleration.X;
                         speed.Y += acceleration.Y;
                     }
-                }
-                else if (tL.light == 2)
-                {
-                    if (Math.Abs(speed.X) >= Math.Abs(deceleration.X))
-                        speed.X -= deceleration.X;
-                    else speed.X = 0;
-                    if (Math.Abs(speed.Y) >= Math.Abs(deceleration.Y))
-                        speed.Y -= deceleration.Y;
-                    else speed.Y = 0;
-                }
-                
-            }
-            else
-            {
-                if (Math.Abs(speed.X) <= size.Width/2 && Math.Abs(speed.Y) <= size.Width / 2)
-                {
-                    speed.X += acceleration.X;
-                    speed.Y += acceleration.Y;
                 }
             }
             pos.X += speed.X;
@@ -338,11 +423,12 @@ namespace UnCrashSim
         }
         public Graphics render(Graphics g)
         {
-            PointF[] p = { new PointF(pos.X - 5 * size.Width / 9, pos.Y - 10 * size.Height / 35), new PointF(pos.X - 5 * size.Width / 9, pos.Y - 23* size.Height/35) , new PointF(pos.X - 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X - 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4*size.Width/9, pos.Y - 10 * size.Height / 35) };
+            PointF[] tmp = { new PointF(pos.X - 5 * size.Width / 9, pos.Y - 10 * size.Height / 35), new PointF(pos.X - 5 * size.Width / 9, pos.Y - 23 * size.Height / 35), new PointF(pos.X - 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X - 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 2 * size.Width / 9, pos.Y - 35 * size.Height / 35), new PointF(pos.X + 3 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4 * size.Width / 9, pos.Y - 25 * size.Height / 35), new PointF(pos.X + 4 * size.Width / 9, pos.Y - 10 * size.Height / 35) };
+            this.p = tmp;
             g.TranslateTransform(pos.X, pos.Y);
             g.RotateTransform((float)rotation);
             g.TranslateTransform(-pos.X, -pos.Y);
-            g.FillEllipse(new SolidBrush(Color.Black), pos.X-4 * size.Width / 9, pos.Y- 20*size.Height / 35, 2 * size.Width / 9, 15 * size.Height / 35);
+            g.FillEllipse(new SolidBrush(Color.Black), pos.X - 4 * size.Width / 9, pos.Y - 20 * size.Height / 35, 2 * size.Width / 9, 15 * size.Height / 35);
             g.FillEllipse(new SolidBrush(Color.Black), pos.X + size.Width / 9, pos.Y - 20 * size.Height / 35, 2 * size.Width / 9, 15 * size.Height / 35);
             g.FillPolygon(b, p);
             g.ResetTransform();
