@@ -14,7 +14,7 @@ namespace UnCrashSim
 {
     public partial class Form1 : Form
     {
-        const int X = 5, Y = 5;
+        const int X =10, Y = 10;
         Bitmap mainBitmap;
         Graphics g;
         Road[,] roads = new Road[X,Y];
