@@ -29,184 +29,309 @@
         private void InitializeComponent()
         {
             this.LeftRight = new System.Windows.Forms.GroupBox();
+            this.LoadDefaultLeftRight = new System.Windows.Forms.Button();
+            this.NextLightLeftRight = new System.Windows.Forms.Button();
+            this.GreenLeftRight = new System.Windows.Forms.NumericUpDown();
+            this.OrangeLeftRight = new System.Windows.Forms.NumericUpDown();
+            this.RedLeftRight = new System.Windows.Forms.NumericUpDown();
             this.UpDown = new System.Windows.Forms.GroupBox();
+            this.LoadDefaultUpDown = new System.Windows.Forms.Button();
+            this.NextLightUpDown = new System.Windows.Forms.Button();
+            this.GreenUpDown = new System.Windows.Forms.NumericUpDown();
+            this.OrangeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.RedUpDown = new System.Windows.Forms.NumericUpDown();
             this.Update = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.indexXInfrastructure = new System.Windows.Forms.NumericUpDown();
+            this.indexYInfrastructure = new System.Windows.Forms.NumericUpDown();
+            this.Auto = new System.Windows.Forms.Button();
+            this.All = new System.Windows.Forms.Button();
+            this.location = new System.Windows.Forms.GroupBox();
             this.LeftRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GreenLeftRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrangeLeftRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RedLeftRight)).BeginInit();
             this.UpDown.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GreenUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrangeUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RedUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indexXInfrastructure)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indexYInfrastructure)).BeginInit();
+            this.location.SuspendLayout();
             this.SuspendLayout();
             // 
             // LeftRight
             // 
-            this.LeftRight.Controls.Add(this.button3);
-            this.LeftRight.Controls.Add(this.button2);
-            this.LeftRight.Controls.Add(this.button1);
-            this.LeftRight.Controls.Add(this.numericUpDown3);
-            this.LeftRight.Controls.Add(this.numericUpDown2);
-            this.LeftRight.Controls.Add(this.numericUpDown1);
-            this.LeftRight.Location = new System.Drawing.Point(2, 1);
+            this.LeftRight.Controls.Add(this.LoadDefaultLeftRight);
+            this.LeftRight.Controls.Add(this.NextLightLeftRight);
+            this.LeftRight.Controls.Add(this.GreenLeftRight);
+            this.LeftRight.Controls.Add(this.OrangeLeftRight);
+            this.LeftRight.Controls.Add(this.RedLeftRight);
+            this.LeftRight.Location = new System.Drawing.Point(5, 135);
             this.LeftRight.Name = "LeftRight";
-            this.LeftRight.Size = new System.Drawing.Size(141, 175);
+            this.LeftRight.Size = new System.Drawing.Size(81, 146);
             this.LeftRight.TabIndex = 0;
             this.LeftRight.TabStop = false;
             this.LeftRight.Text = "Left Right";
             // 
+            // LoadDefaultLeftRight
+            // 
+            this.LoadDefaultLeftRight.Location = new System.Drawing.Point(3, 123);
+            this.LoadDefaultLeftRight.Name = "LoadDefaultLeftRight";
+            this.LoadDefaultLeftRight.Size = new System.Drawing.Size(75, 23);
+            this.LoadDefaultLeftRight.TabIndex = 4;
+            this.LoadDefaultLeftRight.Text = "Set Def";
+            this.LoadDefaultLeftRight.UseVisualStyleBackColor = true;
+            this.LoadDefaultLeftRight.Click += new System.EventHandler(this.LoadDefaultLeftRight_Click);
+            // 
+            // NextLightLeftRight
+            // 
+            this.NextLightLeftRight.BackColor = System.Drawing.Color.Red;
+            this.NextLightLeftRight.Location = new System.Drawing.Point(3, 94);
+            this.NextLightLeftRight.Name = "NextLightLeftRight";
+            this.NextLightLeftRight.Size = new System.Drawing.Size(75, 23);
+            this.NextLightLeftRight.TabIndex = 3;
+            this.NextLightLeftRight.Text = "Next Light";
+            this.NextLightLeftRight.UseVisualStyleBackColor = false;
+            this.NextLightLeftRight.Click += new System.EventHandler(this.NextLightLeftRight_Click);
+            // 
+            // GreenLeftRight
+            // 
+            this.GreenLeftRight.BackColor = System.Drawing.Color.Lime;
+            this.GreenLeftRight.Location = new System.Drawing.Point(3, 68);
+            this.GreenLeftRight.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.GreenLeftRight.Name = "GreenLeftRight";
+            this.GreenLeftRight.Size = new System.Drawing.Size(75, 20);
+            this.GreenLeftRight.TabIndex = 2;
+            this.GreenLeftRight.Value = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.GreenLeftRight.ValueChanged += new System.EventHandler(this.GreenLeftRight_ValueChanged);
+            // 
+            // OrangeLeftRight
+            // 
+            this.OrangeLeftRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.OrangeLeftRight.Location = new System.Drawing.Point(3, 42);
+            this.OrangeLeftRight.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.OrangeLeftRight.Name = "OrangeLeftRight";
+            this.OrangeLeftRight.Size = new System.Drawing.Size(75, 20);
+            this.OrangeLeftRight.TabIndex = 1;
+            this.OrangeLeftRight.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.OrangeLeftRight.ValueChanged += new System.EventHandler(this.OrangeLeftRight_ValueChanged);
+            // 
+            // RedLeftRight
+            // 
+            this.RedLeftRight.BackColor = System.Drawing.Color.Red;
+            this.RedLeftRight.Location = new System.Drawing.Point(3, 16);
+            this.RedLeftRight.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.RedLeftRight.Name = "RedLeftRight";
+            this.RedLeftRight.Size = new System.Drawing.Size(75, 20);
+            this.RedLeftRight.TabIndex = 0;
+            this.RedLeftRight.Value = new decimal(new int[] {
+            6000,
+            0,
+            0,
+            0});
+            this.RedLeftRight.ValueChanged += new System.EventHandler(this.RedLeftRight_ValueChanged);
+            // 
             // UpDown
             // 
-            this.UpDown.Controls.Add(this.button6);
-            this.UpDown.Controls.Add(this.button5);
-            this.UpDown.Controls.Add(this.button4);
-            this.UpDown.Controls.Add(this.numericUpDown6);
-            this.UpDown.Controls.Add(this.numericUpDown5);
-            this.UpDown.Controls.Add(this.numericUpDown4);
-            this.UpDown.Location = new System.Drawing.Point(149, 1);
+            this.UpDown.Controls.Add(this.LoadDefaultUpDown);
+            this.UpDown.Controls.Add(this.NextLightUpDown);
+            this.UpDown.Controls.Add(this.GreenUpDown);
+            this.UpDown.Controls.Add(this.OrangeUpDown);
+            this.UpDown.Controls.Add(this.RedUpDown);
+            this.UpDown.Location = new System.Drawing.Point(89, 135);
             this.UpDown.Name = "UpDown";
-            this.UpDown.Size = new System.Drawing.Size(141, 175);
+            this.UpDown.Size = new System.Drawing.Size(84, 146);
             this.UpDown.TabIndex = 1;
             this.UpDown.TabStop = false;
             this.UpDown.Text = "Up Down";
             // 
+            // LoadDefaultUpDown
+            // 
+            this.LoadDefaultUpDown.Location = new System.Drawing.Point(6, 123);
+            this.LoadDefaultUpDown.Name = "LoadDefaultUpDown";
+            this.LoadDefaultUpDown.Size = new System.Drawing.Size(75, 23);
+            this.LoadDefaultUpDown.TabIndex = 7;
+            this.LoadDefaultUpDown.Text = "Set Def";
+            this.LoadDefaultUpDown.UseVisualStyleBackColor = true;
+            this.LoadDefaultUpDown.Click += new System.EventHandler(this.LoadDefaultUpDown_Click);
+            // 
+            // NextLightUpDown
+            // 
+            this.NextLightUpDown.BackColor = System.Drawing.Color.Lime;
+            this.NextLightUpDown.Location = new System.Drawing.Point(6, 94);
+            this.NextLightUpDown.Name = "NextLightUpDown";
+            this.NextLightUpDown.Size = new System.Drawing.Size(75, 23);
+            this.NextLightUpDown.TabIndex = 6;
+            this.NextLightUpDown.Text = "Next Light";
+            this.NextLightUpDown.UseVisualStyleBackColor = false;
+            this.NextLightUpDown.Click += new System.EventHandler(this.NextLightUpDown_Click);
+            // 
+            // GreenUpDown
+            // 
+            this.GreenUpDown.BackColor = System.Drawing.Color.Lime;
+            this.GreenUpDown.Location = new System.Drawing.Point(6, 68);
+            this.GreenUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.GreenUpDown.Name = "GreenUpDown";
+            this.GreenUpDown.Size = new System.Drawing.Size(75, 20);
+            this.GreenUpDown.TabIndex = 5;
+            this.GreenUpDown.Value = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.GreenUpDown.ValueChanged += new System.EventHandler(this.GreenUpDown_ValueChanged);
+            // 
+            // OrangeUpDown
+            // 
+            this.OrangeUpDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.OrangeUpDown.Location = new System.Drawing.Point(6, 42);
+            this.OrangeUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.OrangeUpDown.Name = "OrangeUpDown";
+            this.OrangeUpDown.Size = new System.Drawing.Size(75, 20);
+            this.OrangeUpDown.TabIndex = 4;
+            this.OrangeUpDown.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.OrangeUpDown.ValueChanged += new System.EventHandler(this.OrangeUpDown_ValueChanged);
+            // 
+            // RedUpDown
+            // 
+            this.RedUpDown.BackColor = System.Drawing.Color.Red;
+            this.RedUpDown.Location = new System.Drawing.Point(6, 16);
+            this.RedUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.RedUpDown.Name = "RedUpDown";
+            this.RedUpDown.Size = new System.Drawing.Size(75, 20);
+            this.RedUpDown.TabIndex = 3;
+            this.RedUpDown.Value = new decimal(new int[] {
+            6000,
+            0,
+            0,
+            0});
+            this.RedUpDown.ValueChanged += new System.EventHandler(this.RedUpDown_ValueChanged);
+            // 
             // Update
             // 
-            this.Update.Location = new System.Drawing.Point(106, 226);
+            this.Update.Location = new System.Drawing.Point(50, 287);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(75, 23);
             this.Update.TabIndex = 2;
             this.Update.Text = "Update";
             this.Update.UseVisualStyleBackColor = true;
+            this.Update.Click += new System.EventHandler(this.Update_Click);
             // 
-            // numericUpDown1
+            // indexXInfrastructure
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(3, 16);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 0;
+            this.indexXInfrastructure.Location = new System.Drawing.Point(6, 16);
+            this.indexXInfrastructure.Name = "indexXInfrastructure";
+            this.indexXInfrastructure.ReadOnly = true;
+            this.indexXInfrastructure.Size = new System.Drawing.Size(36, 20);
+            this.indexXInfrastructure.TabIndex = 9;
+            this.indexXInfrastructure.ValueChanged += new System.EventHandler(this.indexXInfrastructure_ValueChanged);
             // 
-            // numericUpDown2
+            // indexYInfrastructure
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(3, 42);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown2.TabIndex = 1;
+            this.indexYInfrastructure.Location = new System.Drawing.Point(48, 16);
+            this.indexYInfrastructure.Name = "indexYInfrastructure";
+            this.indexYInfrastructure.ReadOnly = true;
+            this.indexYInfrastructure.Size = new System.Drawing.Size(33, 20);
+            this.indexYInfrastructure.TabIndex = 10;
+            this.indexYInfrastructure.ValueChanged += new System.EventHandler(this.indexYInfrastructure_ValueChanged);
             // 
-            // numericUpDown3
+            // Auto
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(3, 68);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown3.TabIndex = 2;
+            this.Auto.Location = new System.Drawing.Point(35, 12);
+            this.Auto.Name = "Auto";
+            this.Auto.Size = new System.Drawing.Size(99, 23);
+            this.Auto.TabIndex = 11;
+            this.Auto.Text = "Toggle Manual";
+            this.Auto.UseVisualStyleBackColor = true;
+            this.Auto.Click += new System.EventHandler(this.Auto_Click);
             // 
-            // numericUpDown4
+            // All
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(6, 16);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown4.TabIndex = 3;
+            this.All.Location = new System.Drawing.Point(35, 41);
+            this.All.Name = "All";
+            this.All.Size = new System.Drawing.Size(99, 23);
+            this.All.TabIndex = 13;
+            this.All.Text = "Toggle Specific";
+            this.All.UseVisualStyleBackColor = true;
+            this.All.Click += new System.EventHandler(this.All_Click);
             // 
-            // numericUpDown5
+            // location
             // 
-            this.numericUpDown5.Location = new System.Drawing.Point(6, 42);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown5.TabIndex = 4;
-            // 
-            // numericUpDown6
-            // 
-            this.numericUpDown6.Location = new System.Drawing.Point(6, 68);
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown6.TabIndex = 5;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(3, 94);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(3, 123);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(3, 152);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(6, 94);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(6, 123);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 7;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(6, 152);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 8;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
+            this.location.Controls.Add(this.indexXInfrastructure);
+            this.location.Controls.Add(this.indexYInfrastructure);
+            this.location.Location = new System.Drawing.Point(50, 70);
+            this.location.Name = "location";
+            this.location.Size = new System.Drawing.Size(84, 42);
+            this.location.TabIndex = 15;
+            this.location.TabStop = false;
+            this.location.Text = "Location";
+            this.location.Visible = false;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(296, 264);
+            this.ClientSize = new System.Drawing.Size(173, 351);
+            this.Controls.Add(this.location);
+            this.Controls.Add(this.All);
+            this.Controls.Add(this.Auto);
             this.Controls.Add(this.Update);
             this.Controls.Add(this.UpDown);
             this.Controls.Add(this.LeftRight);
             this.Name = "Form2";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseUp);
             this.LeftRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.GreenLeftRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrangeLeftRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RedLeftRight)).EndInit();
             this.UpDown.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GreenUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrangeUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RedUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indexXInfrastructure)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indexYInfrastructure)).EndInit();
+            this.location.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -214,19 +339,22 @@
         #endregion
 
         private System.Windows.Forms.GroupBox LeftRight;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button LoadDefaultLeftRight;
+        private System.Windows.Forms.Button NextLightLeftRight;
+        private System.Windows.Forms.NumericUpDown GreenLeftRight;
+        private System.Windows.Forms.NumericUpDown OrangeLeftRight;
+        private System.Windows.Forms.NumericUpDown RedLeftRight;
         private System.Windows.Forms.GroupBox UpDown;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.Button LoadDefaultUpDown;
+        private System.Windows.Forms.Button NextLightUpDown;
+        private System.Windows.Forms.NumericUpDown GreenUpDown;
+        private System.Windows.Forms.NumericUpDown OrangeUpDown;
+        private System.Windows.Forms.NumericUpDown RedUpDown;
         private System.Windows.Forms.Button Update;
+        private System.Windows.Forms.NumericUpDown indexXInfrastructure;
+        private System.Windows.Forms.NumericUpDown indexYInfrastructure;
+        private System.Windows.Forms.Button Auto;
+        private System.Windows.Forms.Button All;
+        private System.Windows.Forms.GroupBox location;
     }
 }

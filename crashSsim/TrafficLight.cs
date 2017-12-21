@@ -26,34 +26,51 @@ namespace UnCrashSim
         SolidBrush coloro = new SolidBrush(Color.Orange);
         public int light = 0;//0=green,1=oragne,2=red
         int[] Times = { 4000, 2000, 6000 };
-        public int[] SetTimes { set {Times= value; } }
+        public int[] SetTimes { set { Times = value; } }
         public List<Light> lights = new List<Light>();
         Point pos = new Point(30, 30);
         Size Size = new Size(5, 40);
         Stopwatch stopWatch = new Stopwatch();
-        int ofSet;
-        public TrafficLight(Light rect, int[] Times, int light = 0,int ofSet=0)
+        int offSet;
+        public TrafficLight(Light rect, int[] Times, int light = 0, int offSet = 0)
         {
             this.light = light;
             this.lights.Add(rect);
             this.Times = Times;
-            this.ofSet = ofSet;
+            this.offSet = offSet;
         }
         public void addTrafficLight(Light light)
         {
             this.lights.Add(light);
         }
+        public void update(int[] Times, int light = 0, int offSet=0)
+        {
+            
+            this.light = light;
+            this.Times = Times;
+            this.offSet = offSet;
+            stopWatch.Stop();
+            stopWatch.Reset();
+        }
+        public void Next() {
+            if (light < 2)
+            {
+                Interlocked.Increment(ref light);
+            }
+            else light = 0;
+        }
+        
         public void calculate()
         {
             if (!stopWatch.IsRunning) stopWatch.Start();
-            if (stopWatch.ElapsedMilliseconds+ ofSet > Times[light])
+            if (stopWatch.ElapsedMilliseconds+ offSet > Times[light])
             {
                 if (light < 2)
                 {
                     Interlocked.Increment(ref light);
                 }
                 else light = 0;
-                ofSet = 0;
+                offSet = 0;
                 stopWatch.Restart();
             }
         }

@@ -19,6 +19,7 @@ namespace UnCrashSim
                 this.direction = direction;
             }
         }
+        //float sizeOfset=1;
         bool canTurn = true;
         //private Choice[] choices = { new Choice(new PointF(-1, 0), 0), new Choice(new PointF(1, 0), 180), new Choice(new PointF(0, -1), 90), new Choice(new PointF(0, 1), -90) };
         static Random rnd = new Random();
@@ -59,7 +60,7 @@ namespace UnCrashSim
             //List <Car> c = cars.FindAll(x => x != this && this.direction == x.direction);
             //if (c != null)
             //    return (c.direction == 0 && c.pos.X < pos.X + size.Width) || (c.direction == 180 && c.pos.X > pos.X - size.Width) || (c.direction == 90 && c.pos.Y < pos.Y + size.Width) || (c.direction == -90 && c.pos.Y > pos.Y - size.Width);
-            foreach (Car c in cars.FindAll(x => x != this && this.direction == x.direction))
+            foreach (Car c in cars.FindAll(c => c != this && this.direction == c.direction))//(c => c != this && Math.Pow(this.pos.X-this.pos.X,2)+ Math.Pow(this.pos.Y - this.pos.Y, 2)< Math.Pow(this.size.Width, 2))
             {
                 if ((pos.X - c.pos.X >= 0 && direction == 0 && pos.X - c.pos.X <= size.Width * 1.1) || (c.pos.X - pos.X >= 0 && direction == 180 && c.pos.X - pos.X < size.Width * 1.1) || (pos.Y - c.pos.Y > 0 && direction == 90 && pos.Y - c.pos.Y < size.Width * 1.1) || (c.pos.Y - pos.Y > 0 && direction == -90 && c.pos.Y - pos.Y < +size.Width * 1.1))
                 {
@@ -72,13 +73,12 @@ namespace UnCrashSim
                     }
                     else
                     {
-                        speed.X = c.speed.X;
-                        speed.Y = c.speed.Y;
+                       speed.X = c.speed.X;
+                       speed.Y = c.speed.Y;
                     }
                     return true;
                 }
             }
-
             return false;
         }
         private bool inFrontOfLight(ref TrafficLight tL)
@@ -170,6 +170,7 @@ namespace UnCrashSim
             {
                 g.ScaleTransform(1, -1);
             }
+            
             g.TranslateTransform(-pos.X, -pos.Y);
             g.FillEllipse(new SolidBrush(Color.Black), pos.X - 4 * size.Width / 9, pos.Y - 20 * size.Height / 35, 2 * size.Width / 9, 15 * size.Height / 35);
             g.FillEllipse(new SolidBrush(Color.Black), pos.X + size.Width / 9, pos.Y - 20 * size.Height / 35, 2 * size.Width / 9, 15 * size.Height / 35);

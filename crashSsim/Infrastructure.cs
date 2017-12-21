@@ -22,12 +22,16 @@ namespace UnCrashSim
                 this.direction = direction;
             }
         }
+        //float sizeOfset = 1;
         //TrafficLight tLUpDown, tLLeftRigth;
         protected SolidBrush b = new SolidBrush(Color.DarkGray);
         public List<Car> cars = new List<Car>();
         protected List<Car> carsToRemove = new List<Car>();
         protected Size size = new Size(300, 300);
+        public Size Size { get { return size; } }
         protected Point pos = new Point(0, 0);
+        public bool autoMode = true;
+        public Point Pos { get { return pos; } }
         protected Dictionary<int, Point> entryPoints = new Dictionary<int, Point>();
         public Dictionary<int, Point> EntryPoints{get{return entryPoints;} }
         protected Dictionary<int, PointF> movement = new Dictionary<int, PointF>();
@@ -335,34 +339,30 @@ namespace UnCrashSim
     public class CrossRoad: Infrastructure
     {
         TrafficLight tLUpDown, tLLeftRigth;
-        private void addTrafficLights(int[] Times,int ligth)
+        private void addTrafficLights(int[] upDownTimes, int upDownLight, int[] leftRightTimes, int leftRightLight)
         {
-            int ofSet = 0;
-            int ligth2;
-            if (ligth<2)
+            int upDownOffSet = 0, leftRightOffSet=0;
+            if (leftRightLight ==1 && upDownLight==2)
             {
-                ligth2 = 2;
-                if (ligth == 1)
-                    ofSet = Times[0];
+                upDownOffSet = leftRightTimes[0];
             }
-            else
+            if (upDownLight == 1 && leftRightLight == 2)
             {
-                ligth2 = 0;
+                leftRightOffSet = upDownTimes[0];
             }
-
-            tLUpDown = new TrafficLight(new Light(new RectangleF(pos.X + size.Width * 5 / 8 + size.Width / 30, pos.Y + size.Height * 5 / 8 + size.Width / 30, size.Width / 6, size.Height / 30), 90),Times, ligth);
+            tLUpDown = new TrafficLight(new Light(new RectangleF(pos.X + size.Width * 5 / 8 + size.Width / 30, pos.Y + size.Height * 5 / 8 + size.Width / 30, size.Width / 6, size.Height / 30), 90), upDownTimes.ToArray<int>(), upDownLight,upDownOffSet);
             tLUpDown.addTrafficLight(new Light(new RectangleF(pos.X + size.Width * 3 / 8, pos.Y + size.Height * 5 / 8 + size.Width / 30, size.Width / 6, size.Height / 30), 90));
             tLUpDown.addTrafficLight(new Light(new RectangleF(pos.X + size.Width * 3 / 8 - size.Width / 30, pos.Y + size.Height * 3 / 8 - size.Width / 30, size.Width / 6, size.Height / 30), -90));
             tLUpDown.addTrafficLight(new Light(new RectangleF(pos.X + size.Width * 5 / 8, pos.Y + size.Height * 3 / 8 - size.Width / 30, size.Width / 6, size.Height / 30), -90));
 
 
-            tLLeftRigth = new TrafficLight(new Light(new RectangleF(pos.X + size.Width * 5 / 8 + size.Width / 30, pos.Y + size.Height * 5 / 8, size.Width / 6, size.Height / 30), 0), Times, ligth2, ofSet);
+            tLLeftRigth = new TrafficLight(new Light(new RectangleF(pos.X + size.Width * 5 / 8 + size.Width / 30, pos.Y + size.Height * 5 / 8, size.Width / 6, size.Height / 30), 0), leftRightTimes.ToArray<int>(), leftRightLight, leftRightOffSet);
             tLLeftRigth.addTrafficLight(new Light(new RectangleF(pos.X + size.Width * 5 / 8 + size.Width / 30, pos.Y + size.Height * 3 / 8 - size.Width / 30, size.Width / 6, size.Height / 30), 0));
             tLLeftRigth.addTrafficLight(new Light(new RectangleF(pos.X + size.Width * 3 / 8 - size.Width / 30, pos.Y + size.Height * 3 / 8, size.Width / 6, size.Height / 30), 180));
             tLLeftRigth.addTrafficLight(new Light(new RectangleF(pos.X + size.Width * 3 / 8 - size.Width / 30, pos.Y + size.Height * 5 / 8 + size.Width / 30, size.Width / 6, size.Height / 30), 180));
             
         }
-        private void initialize(int[] Times, int ligth) {
+        private void initialize(int[] upDownTimes, int upDownLight, int[] leftRightTimes, int leftRightLight) {
             movement.Add(0, new PointF(-1, 0));
             movement.Add(180, new PointF(1, 0));
             movement.Add(90, new PointF(0, -1));
@@ -372,7 +372,7 @@ namespace UnCrashSim
             entryPoints.Add(90, new Point(pos.X + size.Width * 4 / 8, pos.Y + size.Height * 7 / 8));
             entryPoints.Add(-90, new Point(pos.X + size.Width * 3 / 8, pos.Y + size.Height * 1 / 8));
             
-            addTrafficLights(Times,ligth);
+            addTrafficLights(upDownTimes, upDownLight, leftRightTimes, leftRightLight);
             SpawnCar(ref cars, 180);
 
             SpawnCar(ref cars, 0);
@@ -381,15 +381,29 @@ namespace UnCrashSim
 
             SpawnCar(ref cars, 90);
         }
-        public CrossRoad(Size size, Point pos, Point posToList, Point maxPosToList,int[] Times, int ligth)
+        public CrossRoad(Size size, Point pos, Point posToList, Point maxPosToList, int[] upDownTimes, int upDownLight, int[] leftRightTimes, int leftRightLight,bool autoMode)
         {
             this.maxPosToList = maxPosToList;
             this.posToList = posToList;
             this.size = size;
             this.pos = pos;
-            
-            initialize(Times,ligth);
+            this.autoMode = autoMode;
+            initialize(upDownTimes, upDownLight, leftRightTimes, leftRightLight);
 
+        }
+        public void UpdateTraficLight(int[] upDownTimes, int upDownLight, int[] leftRightTimes, int leftRightLight)
+        {
+            int upDownOffSet = 0, leftRightOffSet = 0;
+            if (leftRightLight == 1 && upDownLight == 2)
+            {
+                upDownOffSet = leftRightTimes[0];
+            }
+            if (upDownLight == 1 && leftRightLight == 2)
+            {
+                leftRightOffSet = upDownTimes[0];
+            }
+            tLUpDown.update(upDownTimes.ToArray<int>(), upDownLight, upDownOffSet);
+            tLLeftRigth.update(leftRightTimes.ToArray<int>(), leftRightLight, leftRightOffSet);
         }
         private void carCalculations(ref Infrastructure[,] roads)
         {
@@ -426,13 +440,22 @@ namespace UnCrashSim
         }
         public override void calculate(ref Infrastructure[,] roads)
         {
+            if (autoMode)
+            {
+                tLLeftRigth.calculate();
 
-
-            tLLeftRigth.calculate();
-
-            tLUpDown.calculate();
-
+                tLUpDown.calculate();
+            }
             carCalculations(ref roads);
+        }
+        public void NextTLLeftRigth()
+        {
+            tLLeftRigth.Next();
+           
+        }
+        public void NextTLUpDown()
+        {
+            tLUpDown.Next();
         }
         private void SpawnNewCars(ref List<Car> cars)
         {

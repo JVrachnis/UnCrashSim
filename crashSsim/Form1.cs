@@ -12,117 +12,71 @@ namespace UnCrashSim
 {
     public partial class Form1 : Form
     {
-        
-        int X , Y;
+        int GridX , GridY;
+        SizeF mapSize;
+        Point pointOfSet=new Point(0,0), mainBitmapPos=new Point(200,0), centerPointOfSet;
         int ligth = 0;
         Bitmap mainBitmap;
         Graphics g;
-        Infrastructure[,] roads ;
         Thread mainloopT;
         int[] Times = { 4000, 2000, 6000 };
         TrafficLight tl ;
-        List<Point> ChangeInfrastructureType = new List<Point>();
-        List<Point> InfrastructureChanges = new List<Point>();
         public Form1()
         {
             InitializeComponent();
             g = this.CreateGraphics();
-
-
             tl = new TrafficLight(new Light(new RectangleF(50, 10, 120, 40), 90), Times, ligth);
             mainloopT = new Thread(this.mainloop);
-
-
-        }
-        private void initializeRoads(int X,int Y)
-        {
-            g = this.CreateGraphics();
-            roads = new Infrastructure[X, Y];
-            this.X = X;
-            this.Y = Y;
-            mainBitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
-            for (int i = 0; i < X; i++)
-            {
-                for (int j = 0; j < Y; j++)
-                {
-                    if (i == 1)
-                        roads[i, j] = new CrossRoad(new Size(mainBitmap.Width / X, mainBitmap.Height / Y), new Point(mainBitmap.Width * i / X, mainBitmap.Height * j / Y), new Point(i, j), new Point(X - 1, Y - 1), Times, ligth);
-                    else if (i == 0)
-                        roads[i, j] = new LeftRightRoad(new Size(mainBitmap.Width / X, mainBitmap.Height / Y), new Point(mainBitmap.Width * i / X, mainBitmap.Height * j / Y), new Point(i, j), new Point(X - 1, Y - 1));
-                    else
-                        roads[i, j] = new UpDownRoad(new Size(mainBitmap.Width / X, mainBitmap.Height / Y), new Point(mainBitmap.Width * i / X, mainBitmap.Height * j / Y), new Point(i, j), new Point(X - 1, Y - 1));
-                }
-            }
         }
         private void mainloop()
         {
-            mainBitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
-            Graphics tempG = Graphics.FromImage(mainBitmap);
-
+            Bitmap tempBitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             while (Application.OpenForms.OfType<Form1>().Any()) {
-                tempG.Clear(this.BackColor);
-
-                for (int i = 0; i < X; i++)
-                {
-                    for (int j = 0; j < Y; j++)
-                    {
-                        roads[i, j].render(tempG);
-                    }
-                }
-                g.DrawImage(mainBitmap, 0, 0);
-                for (int i = 0; i < X; i++)
-                {
-                    for (int j = 0; j < Y; j++)
-                    {
-                        roads[i, j].calculate(ref roads);
-                    }
-                }
-                foreach (Point p in ChangeInfrastructureType)
-                {
-                    int i = p.X, j = p.Y;
-                    if (roads[i, j].GetType() == typeof(EmptyInfrastructure))
-                        roads[i, j] = new CrossRoad(new Size(mainBitmap.Width / X, mainBitmap.Height / Y), new Point(mainBitmap.Width * i / X, mainBitmap.Height * j / Y), new Point(i, j), new Point(X - 1, Y - 1), Times, ligth);
-                    else if (roads[i, j].GetType() == typeof(CrossRoad))
-                        roads[i, j] = new LeftRightRoad(new Size(mainBitmap.Width / X, mainBitmap.Height / Y), new Point(mainBitmap.Width * i / X, mainBitmap.Height * j / Y), new Point(i, j), new Point(X - 1, Y - 1));
-                    else if (roads[i, j].GetType() == typeof(LeftRightRoad))
-                        roads[i, j] = new UpDownRoad(new Size(mainBitmap.Width / X, mainBitmap.Height / Y), new Point(mainBitmap.Width * i / X, mainBitmap.Height * j / Y), new Point(i, j), new Point(X - 1, Y - 1));
-                    else
-                        roads[i, j] = new EmptyInfrastructure(new Size(mainBitmap.Width / X, mainBitmap.Height / Y), new Point(mainBitmap.Width * i / X, mainBitmap.Height * j / Y), new Point(i, j), new Point(X - 1, Y - 1));
-                }
-                ChangeInfrastructureType.Clear();
+                tl.calculate();
+                
+                Graphics tempG = Graphics.FromImage(tempBitmap);
+                tl.render(tempG);
+                g.DrawImage(tempBitmap, 0, 0);
+                tempG.Dispose();
             }
-            tempG.Dispose();
         }
+
 
         private void Ok_Click(object sender, EventArgs e)
         {
             this.flowLayoutPanel1.Hide();
             this.Ok.Hide();
             this.flowLayoutPanel2.Hide();
-            this.Width = (int)this.WindowWidth.Value;
-            this.Height = (int)this.WindowHeight.Value;
             Times[0] = (int)this.TimeGreen.Value;
             Times[1] = (int)this.TimeOrange.Value;
             Times[2] = (int)this.TimeRed.Value;
-            initializeRoads((int)this.GridWidth.Value, (int)this.GridHeight.Value);
-            mainloopT.Start();
-        }
+            mapSize = new Size((int)this.MapWidth.Value, (int)this.MapHeight.Value);
+            Form2 sup = new Form2(Times, mapSize,new Size((int)this.GridWidth.Value, (int)this.GridHeight.Value),ligth);
+            sup.Closed += (s, args) => this.Close();
+            sup.Width = (int)this.WindowWidth.Value;
+            sup.Height = (int)this.WindowHeight.Value;
+            this.Hide();
+            sup.Show();
 
-        private void WindowWidth_ValueChanged(object sender, EventArgs e)
+            mainloopT.Abort();
+        }
+        private void MapWidth_ValueChanged(object sender, EventArgs e)
         {
-            GridWidth.Maximum = (int)WindowWidth.Value / 100;
+            GridWidth.Maximum = (int)MapWidth.Value / 100;
+            MapHeight.Value = MapWidth.Value;
         }
 
-        private void WindowHeight_ValueChanged(object sender, EventArgs e)
+        private void MapHeight_ValueChanged(object sender, EventArgs e)
         {
-            GridHeight.Maximum = (int)WindowHeight.Value / 100;
+            GridHeight.Maximum = (int)MapHeight.Value / 100;
+            MapWidth.Value = MapHeight.Value;
         }
-
         private void LoadDefault_Click(object sender, EventArgs e)
         {
             this.TimeGreen.Value = 4000;
             this.TimeOrange.Value = 2000;
             this.TimeRed.Value = 6000;
+            ligth = 0;
         }
 
         private void NextLight_Click(object sender, EventArgs e)
@@ -148,32 +102,54 @@ namespace UnCrashSim
                 Bitmap tempBitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
                 Graphics tempG = Graphics.FromImage(tempBitmap);
                 //tempG.Clear(Color.DarkGreen);
-
-
                 tl.render(tempG);
                 g.DrawImage(tempBitmap, 0, 0);
                 tempG.Dispose();
             }
         }
-
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        private void PreView_Click(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Left) {
-                int i = (int)(e.X * this.GridWidth.Value / this.Width);
-                int j = (int)(e.Y * this.GridHeight.Value / this.Height);
-                ChangeInfrastructureType.Add(new Point(i, j));
-            }else if(e.Button == MouseButtons.Left)
+            if (mainloopT.ThreadState ==ThreadState.Unstarted)
             {
-
+                
+                mainloopT.Start();
+            }else if (mainloopT.ThreadState == ThreadState.Aborted)
+            {
+                mainloopT = new Thread(this.mainloop);
+                mainloopT.Start();
+            }
+            else
+            {
+                mainloopT.Abort();
             }
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        private void TimeRed_ValueChanged(object sender, EventArgs e)
         {
-            
+            Times[2] = (int)TimeRed.Value;
+            tl.update(Times,ligth);
+        }
+
+        private void TimeOrange_ValueChanged(object sender, EventArgs e)
+        {
+            Times[1] = (int)TimeOrange.Value;
+            tl.update(Times, ligth);
+        }
+
+        private void TimeGreen_ValueChanged(object sender, EventArgs e)
+        {
+            Times[0] = (int)TimeGreen.Value;
+            tl.update(Times, ligth);
+        }
+
+        private void GridWidth_ValueChanged(object sender, EventArgs e)
+        {
+            GridHeight.Value = GridWidth.Value;
+        }
+
+        private void GridHeight_ValueChanged(object sender, EventArgs e)
+        {
+            GridWidth.Value = GridHeight.Value;
         }
     }
-    
-
-    
 }
