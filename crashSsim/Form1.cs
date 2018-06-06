@@ -27,6 +27,7 @@ namespace UnCrashSim
             g = this.CreateGraphics();
             tl = new TrafficLight(new Light(new RectangleF(50, 10, 120, 40), 90), Times, ligth);
             mainloopT = new Thread(this.mainloop);
+            mainloopT.Name = "Main Loop";
         }
         private void mainloop()
         {

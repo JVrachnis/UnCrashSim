@@ -46,6 +46,7 @@
             this.Auto = new System.Windows.Forms.Button();
             this.All = new System.Windows.Forms.Button();
             this.location = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.LeftRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GreenLeftRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.OrangeLeftRight)).BeginInit();
@@ -293,15 +294,26 @@
             // 
             // location
             // 
+            this.location.Controls.Add(this.label1);
             this.location.Controls.Add(this.indexXInfrastructure);
             this.location.Controls.Add(this.indexYInfrastructure);
-            this.location.Location = new System.Drawing.Point(50, 70);
+            this.location.Location = new System.Drawing.Point(26, 70);
             this.location.Name = "location";
-            this.location.Size = new System.Drawing.Size(84, 42);
+            this.location.Size = new System.Drawing.Size(122, 59);
             this.location.TabIndex = 15;
             this.location.TabStop = false;
             this.location.Text = "Location";
             this.location.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 39);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "help";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form2
             // 
@@ -315,7 +327,7 @@
             this.Controls.Add(this.UpDown);
             this.Controls.Add(this.LeftRight);
             this.Name = "Form2";
-            this.Text = "Form2";
+            this.Text = "UnCrashSim";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseDown);
@@ -332,6 +344,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.indexXInfrastructure)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.indexYInfrastructure)).EndInit();
             this.location.ResumeLayout(false);
+            this.location.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -356,5 +369,6 @@
         private System.Windows.Forms.Button Auto;
         private System.Windows.Forms.Button All;
         private System.Windows.Forms.GroupBox location;
+        private System.Windows.Forms.Label label1;
     }
 }

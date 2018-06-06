@@ -297,6 +297,11 @@ namespace UnCrashSim
             }
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("You can select the road you want to edit by right clicking on it");
+        }
+
         private void All_Click(object sender, EventArgs e)
         {
             selectedAll = !selectedAll;
@@ -346,6 +351,7 @@ namespace UnCrashSim
         { 
             InitializeComponent();
             mainloopT = new Thread(this.mainloop);
+            mainloopT.Name = "Main Loop";
             this.Closed += (s, args) => mainloopT.Abort();
             this.Times = Times;
             this.mapSize = mapSize;

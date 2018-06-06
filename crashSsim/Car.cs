@@ -57,15 +57,10 @@ namespace UnCrashSim
         }
         private bool CarCollision(ref List<Car> cars)
         {
-            //List <Car> c = cars.FindAll(x => x != this && this.direction == x.direction);
-            //if (c != null)
-            //    return (c.direction == 0 && c.pos.X < pos.X + size.Width) || (c.direction == 180 && c.pos.X > pos.X - size.Width) || (c.direction == 90 && c.pos.Y < pos.Y + size.Width) || (c.direction == -90 && c.pos.Y > pos.Y - size.Width);
             foreach (Car c in cars.FindAll(c => c != this && this.direction == c.direction))//(c => c != this && Math.Pow(this.pos.X-this.pos.X,2)+ Math.Pow(this.pos.Y - this.pos.Y, 2)< Math.Pow(this.size.Width, 2))
             {
                 if ((pos.X - c.pos.X >= 0 && direction == 0 && pos.X - c.pos.X <= size.Width * 1.1) || (c.pos.X - pos.X >= 0 && direction == 180 && c.pos.X - pos.X < size.Width * 1.1) || (pos.Y - c.pos.Y > 0 && direction == 90 && pos.Y - c.pos.Y < size.Width * 1.1) || (c.pos.Y - pos.Y > 0 && direction == -90 && c.pos.Y - pos.Y < +size.Width * 1.1))
                 {
-                    //pos.X -= speed.X * size.Width / 10;
-                    //pos.Y -= speed.Y * size.Width / 10;
                     if ((pos.X - c.pos.X >= 0 && direction == 0 && pos.X - c.pos.X <= size.Width) || (c.pos.X - pos.X >= 0 && direction == 180 && c.pos.X - pos.X < size.Width) || (pos.Y - c.pos.Y > 0 && direction == 90 && pos.Y - c.pos.Y < size.Width) || (c.pos.Y - pos.Y > 0 && direction == -90 && c.pos.Y - pos.Y < +size.Width)) {
                         speed.X = 0;
                         speed.Y = 0;
